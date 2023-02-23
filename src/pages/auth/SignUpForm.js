@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import styles from "../../styles/SignUpForm.module.css";
-import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
 import { Form, Button, Image, Col, Row, Container, Alert } from "react-bootstrap";
@@ -52,7 +51,7 @@ const SignUpForm = () => {
             md={6}
             className={`my-auto d-none d-md-block p-2 ${styles.SignUpCol}`}
             >
-                <Container className={`${appStyles.Content} p-4 `}>
+                <Container className={appStyles.Content}>
                     <h1 className={styles.Header}>Sign Up</h1>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="username">
