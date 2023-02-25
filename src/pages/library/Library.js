@@ -45,7 +45,7 @@ const Review = (props) => {
   const handleUnlike = async () => {
     try {
       await axiosRes.delete(`/likes/${like_id}/`);
-      setPosts((prevReviews) => ({
+      setReviews((prevReviews) => ({
         ...prevReviews,
         results: prevReviews.results.map((review) => {
           return review.id === id
