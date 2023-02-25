@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 
-const Review = (props) => {
+const Reviews = (props) => {
   const {
     id,
     owner,
@@ -113,4 +113,4 @@ const Review = (props) => {
   );
 };
 
-export default Review;
+export default Reviews;

@@ -7,17 +7,49 @@ import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import ReviewCreateForm from './pages/reviews/ReviewCreateForm'
 import ReviewPage from "./pages/reviews/ReviewPage";
+import ReviewsPage from "./pages/reviews/ReviewsPage";
 import Library from "./pages/library/Library";
 import BookCreateForm from "./pages/library/BookCreateForm";
 import BookPage from "./pages/library/BookPage"
 
+import { useCurrentUser } from "./contexts/CurrentUserContext";
+
 function App() {
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
+
   return (
     <div className={styles.App}>
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          <Route exact path="/" render={() => <h1>Home page</h1>} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <ReviewsPage message="No results found. Adjust the search keyword." />
+            )}
+          />
+          <Route
+            exact
+            path="/feed"
+            render={() => (
+              <ReviewsPage
+                message="No results found. Adjust the search keyword or follow a user."
+                filter={`owner__followed__owner__profile=${profile_id}&`}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/liked"
+            render={() => (
+              <ReviewsPage
+                message="No results found. Adjust the search keyword or like a post."
+                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
+              />
+            )}
+          />
           <Route exact path="/signin" render={() => <SignInForm/>} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/reviews/create" render={() => <ReviewCreateForm />} />
