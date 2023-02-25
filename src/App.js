@@ -7,6 +7,8 @@ import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import ReviewCreateForm from './pages/reviews/ReviewCreateForm'
 import ReviewPage from "./pages/reviews/ReviewPage";
+import BookCreateForm from "./pages/library/BookCreateForm";
+import BookPage from "./pages/library/BookPage"
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/reviews/create" render={() => <ReviewCreateForm />} />
           <Route exact path="/reviews/:id" render={() => <ReviewPage />} />
+          <Route exact path="/library/create" render={() => <BookCreateForm />} />
+          <Route exact path="/library/:id" render={() => <BookPage />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
