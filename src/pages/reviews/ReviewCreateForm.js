@@ -37,7 +37,7 @@ function ReviewCreateForm() {
             // Store results in the results array
             data.forEach((value) => {
                 results.push({
-                key: value.name,
+                key: value.title,
                 value: value.id,
                 });
             });
