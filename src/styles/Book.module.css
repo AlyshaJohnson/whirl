@@ -10,3 +10,14 @@
 h5 {
   margin: 0 0;
 }
+
+.CoverCol {
+  width: 95%;
+  border: solid 1px #64868F;
+  padding: 2px;
+}
+
+.Image {
+  max-width: 500px;
+  height: auto;
+}

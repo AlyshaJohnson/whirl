@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from "react";
 
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 
-import appStyles from "../../App.module.css";
+import appStyles from "../../App.module.css"
+import btnStyles from "../../styles/Button.module.css";
+import styles from "../../styles/ReviewsPage.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
+import Book from "./Book"
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-function ReviewPage() {
+function BookPage() {
   const { id } = useParams();
-  const [review, setReview] = useState({ results: [] });
+  const [book, setBook] = useState({ results: [] });
+
+  const currentUser = useCurrentUser();
+  const is_librarian = currentUser?.is_librarian === true;
+
+  const addBookIcon = (
+    <Container className={`my-3 ${appStyles.Content} text-center`}>
+      <Button className={`${btnStyles.Button} ${btnStyles.Orange}`} to="/library/create">
+        <i className="fa fa-plus-square"></i>Add Book
+      </Button>
+    </Container>
+  );
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: review }] = await Promise.all([
-          axiosReq.get(`/reviews/${id}`),
+        const [{ data: book }] = await Promise.all([
+          axiosReq.get(`/library/${id}`),
         ]);
-        setReview({ results: [review] });
-        console.log(review);
+        setBook({ results: [book] });
+        console.log(book);
       } catch (err) {
         console.log(err);
       }
@@ -29,16 +44,12 @@ function ReviewPage() {
   }, [id]);
 
   return (
-    <Row className="h-100">
-      <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p>Review component</p>
-        <Container className={appStyles.Content}>Comments</Container>
-      </Col>
-      <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        Popular profiles
-      </Col>
-    </Row>
+    <div className="h-100">
+      {is_librarian && addBookIcon}
+      <Book {...book.results[0]} setBook={setBook} bookPage />
+      <Container className={appStyles.Content}>Reviews</Container>
+    </div>
   );
 }
 
-export default ReviewPage;
+export default BookPage;

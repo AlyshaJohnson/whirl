@@ -24,7 +24,7 @@ function ReviewsPage({ message, filter = "" }) {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const { data } = await axiosReq.get(`/posts/?${filter}search=${query}`);
+        const { data } = await axiosReq.get(`/reviews/?${filter}search=${query}`);
         setReviews(data);
         setHasLoaded(true);
       } catch (err) {
@@ -36,11 +36,11 @@ function ReviewsPage({ message, filter = "" }) {
     const timer = setTimeout(() => {
         fetchReviews();
       }, 1000);
-  
-      return () => {
-        clearTimeout(timer);
-      };
-    }, [filter, query, pathname]);
+    
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [filter, query, pathname]);
 
   return (
     <Row className="h-100">
@@ -51,13 +51,13 @@ function ReviewsPage({ message, filter = "" }) {
           className={styles.SearchBar}
           onSubmit={(event) => event.preventDefault()}
         >
-            <Form.Control
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                type="text"
-                className="mr-sm-2"
-                placeholder="Search reviews"
-            />
+          <Form.Control
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              type="text"
+              className="mr-sm-2"
+              placeholder="Search reviews"
+          />
         </Form>
         {hasLoaded ? (
           <>
