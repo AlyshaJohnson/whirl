@@ -73,6 +73,7 @@ function BookCreateForm() {
         formData.append("seriesTitle", seriesTitle);
         formData.append("seriesBookNo", seriesBookNo);
         formData.append("seriesLinks", seriesLinks);
+
     
         try {
             const { data } = await axiosReq.post("/library/", formData);

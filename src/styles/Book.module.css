@@ -21,3 +21,34 @@ h5 {
   max-width: 500px;
   height: auto;
 }
+
+.Container {
+  min-height: 343px;
+}
+
+.Header {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 27px;
+  text-align: left;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64868F;
+}
+
+.BottomBorder {
+  border-bottom: 1px solid #64868F;
+}
+
+span.Title {
+  color: #E8AB4F;
+}
+
+span.Title:hover {
+  text-decoration: underline;
+}
+
+span.Author {
+  color: #BB7058;
+}

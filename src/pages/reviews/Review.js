@@ -15,10 +15,13 @@ const Reviews = (props) => {
     comments_count,
     likes_count,
     like_id,
+    book,
     title,
-    content,
-    image,
+    description,
+    created_at,
     updated_at,
+    tags,
+    draft,
     reviewPage,
     setReviews,
   } = props;
@@ -73,11 +76,11 @@ const Reviews = (props) => {
         </Media>
       </Card.Body>
       <Link to={`/reviews/${id}`}>
-        <Card.Img src={image} alt={title} />
+        <Card.Img src={book.Cover} alt={title} />
       </Link>
       <Card.Body>
         {title && <Card.Title className="text-center">{title}</Card.Title>}
-        {content && <Card.Text>{content}</Card.Text>}
+        {description && <Card.Text>{description}</Card.Text>}
         <div className={styles.ReviewBar}>
           {is_owner ? (
             <OverlayTrigger

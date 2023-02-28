@@ -39,7 +39,7 @@ function ReviewCreateForm() {
                 results.push({
                 key: value.title,
                 value: value.id,
-                });
+                })
             });
             // Update the options state
             setOptions([
@@ -172,12 +172,12 @@ function ReviewCreateForm() {
                     {message}
                 </Alert>
             ))}
-            <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+            <Button className={`${btnStyles.Button} ${btnStyles.Orange}`} type="submit">
             publish
             </Button>
             <Button
-                className={`${btnStyles.Button} ${btnStyles.Blue}`}
-                onClick={() => {}}
+                className={`${btnStyles.Button} ${btnStyles.Orange}`}
+                onClick={() => history.goBack()}
             >
             cancel
             </Button>

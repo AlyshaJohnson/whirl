@@ -29,11 +29,13 @@ function LibraryPage({ message, filter = "" }) {
   const is_librarian = currentUser?.is_staff === true;
 
   const addBookIcon = (
-    <Button
-      to="/library/create"
-    >
-      <i className="far fa-plus-square"></i>Add Book
-    </Button>
+    <Col lg={4}>
+      <Button
+        to="/library/create"
+      >
+        <i className="far fa-plus-square"></i>Add Book
+      </Button>
+    </Col>
   );
 
   useEffect(() => {
@@ -58,9 +60,9 @@ function LibraryPage({ message, filter = "" }) {
   }, [filter, query, pathname]);
 
     return (
+      <>
         <Row className="h-100">
           <Col className="py-2 p-0 p-lg-2" lg={8}>
-            {is_librarian && addBookIcon}
             <i className={`fas fa-search ${styles.SearchIcon}`} />
             <Form
               className={styles.SearchBar}
@@ -74,31 +76,34 @@ function LibraryPage({ message, filter = "" }) {
                     placeholder="Search books"
                 />
             </Form>
-            {hasLoaded ? (
-              <>
-                {books.results.length ? (
-                  <InfiniteScroll
-                    children={books.results.map((book) => (
-                      <Book key={book.id} {...book} setBooks={setBooks} />
-                    ))}
-                    dataLength={books.results.length}
-                    loader={<Asset spinner />}
-                    hasMore={!!books.next}
-                    next={() => fetchMoreData(books, setBooks)}
-                  />
-                ) : (
-                  <Container className={appStyles.Content}>
-                    <Asset src={NoResults} message={message} />
-                  </Container>
-                )}
-              </>
+          </Col>
+          {is_librarian ? addBookIcon : <></> }
+        </Row>
+        {hasLoaded ? (
+          <>
+            {books.results.length ? (
+              <InfiniteScroll
+                children={books.results.map((book) => (
+                  <Book key={book.id} {...book} setBooks={setBooks} />
+                ))}
+                dataLength={books.results.length}
+                loader={<Asset spinner />}
+                hasMore={!!books.next}
+                next={() => fetchMoreData(books, setBooks)}
+              />
             ) : (
               <Container className={appStyles.Content}>
-                <Asset spinner />
+                <Asset src={NoResults} message={message} />
+                {is_librarian ? addBookIcon : <></> }
               </Container>
             )}
-          </Col>
-        </Row>
+          </>
+        ) : (
+          <Container className={appStyles.Content}>
+            <Asset spinner />
+          </Container>
+        )}
+      </>
       );
     }
 

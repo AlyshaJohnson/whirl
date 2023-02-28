@@ -5,10 +5,14 @@
 .Header {
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 25px;
     line-height: 19px;
     text-align: center;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #2142b2;
+    color: #E8AB4F;
+}
+
+.BottomBorder {
+    border-bottom: 1px solid #64868F;
 }
