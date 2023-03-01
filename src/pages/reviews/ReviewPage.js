@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
+import PopularProfiles from "../profiles/PopularProfiles";
 
 function ReviewPage() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ function ReviewPage() {
         <Container className={appStyles.Content}>Comments</Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        Popular profiles
+      <PopularProfiles />
       </Col>
     </Row>
   );

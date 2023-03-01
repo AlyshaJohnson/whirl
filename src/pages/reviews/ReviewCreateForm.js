@@ -10,8 +10,10 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function ReviewCreateForm() {
+    useRedirect("loggedOut");
     const [reviewData, setReviewData] = useState({
         book: "",
         title: "",

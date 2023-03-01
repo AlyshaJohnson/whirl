@@ -1,0 +1,16 @@
+.Profile {
+    text-transform: uppercase;
+    display: inline;
+    text-align: center;
+}
+
+.Header {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #64868F;
+}

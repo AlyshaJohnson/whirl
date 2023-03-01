@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
+import { useRedirect } from "../../hooks/useRedirect";
 
 import styles from "../../styles/SignUpForm.module.css";
 import appStyles from "../../App.module.css";
@@ -10,6 +11,7 @@ import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 const SignInForm = () => {
     const setCurrentUser = useSetCurrentUser();
+    useRedirect("loggedIn");
   
     const [signInData, setSignInData] = useState({
       username: "",

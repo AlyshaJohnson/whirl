@@ -11,6 +11,10 @@ import ReviewsPage from "./pages/reviews/ReviewsPage";
 import BookCreateForm from "./pages/library/BookCreateForm";
 import BookPage from "./pages/library/BookPage"
 import LibraryPage from './pages/library/LibraryPage';
+import ProfilePage from "./pages/profiles/ProfilePage";
+import UsernameForm from "./pages/profiles/UsernameForm";
+import UserPasswordForm from "./pages/profiles/UserPasswordForm";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 
@@ -45,7 +49,7 @@ function App() {
             path="/liked"
             render={() => (
               <ReviewsPage
-                message="No results found. Adjust the search keyword or like a post."
+                message="No results found. Adjust the search keyword or like a review."
                 filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
               />
             )}
@@ -57,6 +61,22 @@ function App() {
           <Route exact path="/library/create" render={() => <BookCreateForm />} />
           <Route exact path="/library/:id" render={() => <BookPage />} />
           <Route exact path="/library/" render={() => <LibraryPage />} />
+          <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
+          <Route
+            exact
+            path="/profiles/:id/edit/username"
+            render={() => <UsernameForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit/password"
+            render={() => <UserPasswordForm />}
+          />
+          <Route
+            exact
+            path="/profiles/:id/edit"
+            render={() => <ProfileEditForm />}
+          />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
