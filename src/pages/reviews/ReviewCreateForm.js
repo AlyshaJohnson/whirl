@@ -36,7 +36,7 @@ function ReviewCreateForm() {
             const { data } = await axiosReq.get("/library/");
             const results = []
             // Store results in the results array
-            data.forEach((value) => {
+            data.results.forEach((value) => {
                 results.push({
                 key: value.title,
                 value: value.id,
@@ -163,11 +163,11 @@ function ReviewCreateForm() {
                     {message}
                 </Alert>
             ))}
-            <Button className={`${btnStyles.Button} ${btnStyles.Orange}`} type="submit">
+            <Button className={`${btnStyles.MidBtn} ${btnStyles.Orange}`} type="submit">
             publish
             </Button>
             <Button
-                className={`${btnStyles.Button} ${btnStyles.Orange}`}
+                className={`${btnStyles.MidBtn} ${btnStyles.OrangeOutline}`}
                 onClick={() => history.goBack()}
             >
             cancel
