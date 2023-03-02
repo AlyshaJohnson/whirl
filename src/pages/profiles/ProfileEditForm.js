@@ -27,10 +27,12 @@ const ProfileEditForm = () => {
 
   const [profileData, setProfileData] = useState({
     name: "",
-    content: "",
+    age: "",
     image: "",
+    medium: "",
+    favourite_quote: "",
   });
-  const { name, content, image } = profileData;
+  const { name, age, image, medium, favourite_quote } = profileData;
 
   const [errors, setErrors] = useState({});
 
@@ -39,8 +41,8 @@ const ProfileEditForm = () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
-          const { name, content, image } = data;
-          setProfileData({ name, content, image });
+          const { name, age, image, medium, favourite_quote } = data;
+          setProfileData({ name, age, image, medium, favourite_quote });
         } catch (err) {
           console.log(err);
           history.push("/");
@@ -64,7 +66,9 @@ const ProfileEditForm = () => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("content", content);
+    formData.append("age", age);
+    formData.append("medium", medium);
+    formData.append("favourite_quote", favourite_quote);
 
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
@@ -86,13 +90,39 @@ const ProfileEditForm = () => {
   const textFields = (
     <>
       <Form.Group>
-        <Form.Label>Bio</Form.Label>
+        <Form.Label>Name</Form.Label>
         <Form.Control
-          as="textarea"
-          value={content}
+          as="text"
+          value={name}
           onChange={handleChange}
-          name="content"
-          rows={7}
+          name="name"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Age</Form.Label>
+        <Form.Control
+          as="text"
+          value={age}
+          onChange={handleChange}
+          name="age"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Reading medium</Form.Label>
+        <Form.Control
+          as="text"
+          value={medium}
+          onChange={handleChange}
+          name="medium"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Favourite quote</Form.Label>
+        <Form.Control
+          as="text"
+          value={favourite_quote}
+          onChange={handleChange}
+          name="favourite_quote"
         />
       </Form.Group>
 
@@ -102,12 +132,12 @@ const ProfileEditForm = () => {
         </Alert>
       ))}
       <Button
-        className={`${btnStyles.Button} ${btnStyles.Blue}`}
+        className={`${btnStyles.SmBtn} ${btnStyles.OrangeOutline}`}
         onClick={() => history.goBack()}
       >
         cancel
       </Button>
-      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+      <Button className={`${btnStyles.SmBtn} ${btnStyles.Orange}`} type="submit">
         save
       </Button>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/Review.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Card, Row, Col, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
@@ -20,7 +20,7 @@ const Reviews = (props) => {
     description,
     created_at,
     updated_at,
-    tags,
+    rating,
     draft,
     reviewPage,
     setReviews,
@@ -64,53 +64,73 @@ const Reviews = (props) => {
   return (
     <Card className={styles.Review}>
       <Card.Body>
-        <Media className="align-items-center justify-content-between">
+        <Media className={`align-items-center justify-content-between ${styles.SmHeader}`}>
           <Link to={`/profiles/${profile_id}`}>
             <Avatar src={profile_image} height={55} />
             {owner}
           </Link>
-          <div className="d-flex align-items-center">
-            <span>{updated_at}</span>
+          <div className={`d-flex align-items-center ${styles.SmHeader}`}>
+            <span>{created_at}</span>
             {is_owner && reviewPage && "..."}
           </div>
         </Media>
       </Card.Body>
-      <Link to={`/reviews/${id}`}>
-        <Card.Img src={book.Cover} alt={title} />
-      </Link>
-      <Card.Body>
-        {title && <Card.Title className="text-center">{title}</Card.Title>}
-        {description && <Card.Text>{description}</Card.Text>}
-        <div className={styles.ReviewBar}>
-          {is_owner ? (
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>You can't like your own review!</Tooltip>}
-            >
-              <i className="far fa-heart" />
-            </OverlayTrigger>
-          ) : like_id ? (
-            <span onClick={handleUnlike}>
-              <i className={`fas fa-heart ${styles.Heart}`} />
-            </span>
-          ) : currentUser ? (
-            <span onClick={handleLike}>
-              <i className={`far fa-heart ${styles.HeartOutline}`} />
-            </span>
-          ) : (
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>Log in to like reviews!</Tooltip>}
-            >
-              <i className="far fa-heart" />
-            </OverlayTrigger>
-          )}
-          {likes_count}
+      {title && <Card.Title className={`text-center ${styles.Header}`}>
+          <Link to={`/reviews/${id}`}>{title}</Link> by <Link to={`/profiles/${profile_id}`}>{owner}</Link>
+        </Card.Title>}
+      <Row>
+        <Col>
           <Link to={`/reviews/${id}`}>
-            <i className="far fa-comments" />
+            <Card.Img src={book.cover} alt={title} />
           </Link>
-          {comments_count}
-        </div>
+        </Col>
+        <Col>
+          <Card.Body>
+            {book && <Card.Text className="text-center">{book.title} by {book.author}</Card.Text>}
+            {rating && <Card.Text className="text-center">{rating}</Card.Text>}
+            {description && <Card.Text className="text-left">
+                <p className={styles.SmHeader}>Description:</p>
+                {description}
+              </Card.Text>}
+          </Card.Body>
+        </Col>
+      </Row>
+      <hr />
+      <Card.Body>
+        <Row className={styles.ReviewBar}>
+          <Col>
+            {is_owner ? (
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip>You can't like your own review!</Tooltip>}
+              >
+                <i className="far fa-heart" />
+              </OverlayTrigger>
+            ) : like_id ? (
+              <span onClick={handleUnlike}>
+                <i className={`fas fa-heart ${styles.Heart}`} />
+              </span>
+            ) : currentUser ? (
+              <span onClick={handleLike}>
+                <i className={`far fa-heart ${styles.HeartOutline}`} />
+              </span>
+            ) : (
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip>Log in to like reviews!</Tooltip>}
+              >
+                <i className="far fa-heart" />
+              </OverlayTrigger>
+            )}
+            {likes_count}
+          </Col>
+          <Col>
+            <Link to={`/reviews/${id}`}>
+              <i className="far fa-comments" />
+            </Link>
+            {comments_count}
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );

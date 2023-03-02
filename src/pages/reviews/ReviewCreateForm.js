@@ -21,11 +21,10 @@ function ReviewCreateForm() {
         bookStarted: "",
         bookFinished: "",
         rating: "",
-        tags: "",
         draft: "",
     });
 
-    const { book, title, description, bookStarted, bookFinished, rating, tags, draft } = reviewData;
+    const { book, title, description, bookStarted, bookFinished, rating, draft } = reviewData;
     
     const [options, setOptions] = useState([]);
     const [errors, setErrors] = useState({});
@@ -71,7 +70,6 @@ function ReviewCreateForm() {
         formData.append("bookStarted", bookStarted);
         formData.append("bookFinished", bookFinished);
         formData.append("rating", rating);
-        formData.append("tags", tags);
         formData.append("draft", draft);
     
         try {
@@ -153,15 +151,6 @@ function ReviewCreateForm() {
                 <Form.Control type="date" placeholder="Date Finished" name="bookFinished" value={bookFinished} onChange={handleChange} />
             </Form.Group>
             {errors?.bookFinished?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                    {message}
-                </Alert>
-            ))}
-            <Form.Group controlId="tags">
-                <Form.Label className="d-none">Tags</Form.Label>
-                <Form.Control type="text" placeholder="Tags" name="tags" value={tags} onChange={handleChange} />
-            </Form.Group>
-            {errors?.tags?.map((message, idx) => (
                 <Alert variant="warning" key={idx}>
                     {message}
                 </Alert>

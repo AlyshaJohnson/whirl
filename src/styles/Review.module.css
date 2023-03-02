@@ -1,24 +1,46 @@
 .Review {
-    background-color: #ffffff;
-    border: 1px solid #dadadf;
-    border-radius: 2px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
+  background-color: #ffffff;
+  border: 1px solid #dadadf;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-align: center;
+}
   
-  .Review figure,
-  h5 {
-    margin: 0 0;
-  }
-  
-  .Heart {
-    color: #f85032;
-  }
-  
-  .Heart:hover {
-    color: #E8AB4F;
-  }
-  
-  .HeartOutline:hover {
-    color: #f85032;
-  }
+.Review figure,
+h5 {
+  margin: 0 0;
+}
+
+.Header {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 27px;
+  text-align: left;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64868F;
+}
+
+.SmHeader {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 17px;
+  text-align: left;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64868F;
+}
+
+.Heart {
+  color: #f85032;
+}
+
+.Heart:hover {
+  color: #E8AB4F;
+}
+
+.HeartOutline:hover {
+  color: #f85032;
+}
