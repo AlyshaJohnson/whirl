@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/Review.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Row, Col, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -16,6 +16,9 @@ const Reviews = (props) => {
     likes_count,
     like_id,
     book,
+    book_image,
+    book_title,
+    book_author,
     title,
     description,
     created_at,
@@ -71,23 +74,26 @@ const Reviews = (props) => {
           </Link>
           <div className={`d-flex align-items-center ${styles.SmHeader}`}>
             <span>{created_at}</span>
-            {is_owner && reviewPage && "..."}
+            {is_owner && reviewPage}
           </div>
         </Media>
       </Card.Body>
       {title && <Card.Title className={`text-center ${styles.Header}`}>
-          <Link to={`/reviews/${id}`}>{title}</Link> by <Link to={`/profiles/${profile_id}`}>{owner}</Link>
-        </Card.Title>}
+        <Link to={`/reviews/${id}`}>"{title}"</Link>
+      </Card.Title>}
       <Row>
-        <Col>
+        <Col lg={5}>
           <Link to={`/reviews/${id}`}>
-            <Card.Img src={book.cover} alt={title} />
+            <Card.Img src={book_image} alt={book_title} />
           </Link>
         </Col>
-        <Col>
+        <Col lg={7}>
           <Card.Body>
-            {book && <Card.Text className="text-center">{book.title} by {book.author}</Card.Text>}
-            {rating && <Card.Text className="text-center">{rating}</Card.Text>}
+            {book && 
+              <Card.Text className="text-center">
+                <em>{book_title} by {book_author}</em>
+              </Card.Text>}
+            {rating && <Card.Text className={`text-center ${styles.Rating}`}>{rating} / 5</Card.Text>}
             {description && <Card.Text className="text-left">
                 <p className={styles.SmHeader}>Description:</p>
                 {description}
