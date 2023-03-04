@@ -83,7 +83,7 @@ const Reviews = (props) => {
       </Card.Title>}
       <Row>
         <Col lg={5}>
-          <Link to={`/reviews/${id}`}>
+          <Link to={`/library/${book}`}>
             <Card.Img src={book_image} alt={book_title} />
           </Link>
         </Col>
