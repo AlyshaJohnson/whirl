@@ -1,11 +1,16 @@
 .DropdownItem {
-    display: inline-block;
-    max-width: 50%;
-    padding: 0px;
-  }
+  display: inline-block;
+  max-width: 50%;
+  padding: 0px;
+  text-transform: uppercase;
+}
+
+.ProfileDropdown {
+  text-transform: uppercase;
+}
   
-  .Absolute {
-    position: absolute;
-    right: 0;
-    z-index: 99;
-  }
+.Absolute {
+  position: absolute;
+  right: 0;
+  z-index: 99;
+}

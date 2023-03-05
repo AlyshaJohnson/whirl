@@ -36,21 +36,11 @@ function App() {
           />
           <Route
             exact
-            path="/feed"
+            path="/"
             render={() => (
               <ReviewsPage
                 message="No results found. Adjust the search keyword or follow a user."
                 filter={`owner__followed__owner__profile=${profile_id}&`}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/liked"
-            render={() => (
-              <ReviewsPage
-                message="No results found. Adjust the search keyword or like a review."
-                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
               />
             )}
           />
