@@ -44,11 +44,11 @@ function ProfilePage() {
             axiosReq.get(`/profiles/${id}/`),
             axiosReq.get(`/reviews/?owner__profile=${id}`),
           ]);
-        setProfileReviews(profileReviews);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
+        setProfileReviews(profileReviews);
         setHasLoaded(true);
       } catch (err) {
         console.log(err);
