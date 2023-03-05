@@ -16,8 +16,12 @@ const Book = (props) => {
     blurb,
     series_title,
     series_book_no,
-    series_links,
+    series_links = []
   } = props;
+
+  const seriesLinks = series_links.map((link) => {
+    <Col lg={4} md={6}>{link}</Col>
+  })
 
   return (
     <>
@@ -44,14 +48,89 @@ const Book = (props) => {
                 <Card.Img className={`${styles.Image}`} src={cover} alt={title} />
               </Link>
             </Col>
-            <Col className="mt-2" xs={12} md={6}>
-              {ISBN && <Card.Text>ISBN: {ISBN}</Card.Text>}
-              {publisher && <Card.Text>Publisher: {publisher}</Card.Text>}
-              {published && <Card.Text>Date published:{published}</Card.Text>}
-              {blurb && <Card.Text>Blurb: {blurb}</Card.Text>}
-              {series_title && <Card.Text>Part of the {series_title} series</Card.Text>}
-              {series_book_no && <Card.Text>Book no.: {series_book_no}</Card.Text>}
-              {series_links && <Card.Text>Other books in series: {series_links}</Card.Text>}
+            <Col className={`mt-2 ${styles.BookInfoItem}`} xs={12} md={6}>
+              {ISBN && <Card.Text>
+                <div className={styles.Key}>
+                  <p>
+                    ISBN:
+                  </p>
+                </div>
+                <div className={styles.Value}>
+                  <p>
+                    {ISBN}
+                  </p>
+                </div>
+              </Card.Text>}
+              {publisher && <Card.Text>
+                <div className={styles.Key}>
+                  <p>
+                    Publisher:
+                  </p>
+                </div>
+                <div className={styles.Value}>
+                  <p>
+                    {publisher}
+                  </p>
+                </div>
+              </Card.Text>}
+              {published && <Card.Text>
+                <div className={styles.Key}>
+                  <p>
+                    Date published:
+                  </p>
+                </div>
+                <div className={styles.Value}>
+                  <p>
+                    {published}
+                  </p>
+                </div>
+              </Card.Text>}
+              {blurb && <Card.Text>
+                <div className={styles.BlurbSeriesKey}>
+                  <p>
+                    Blurb:
+                  </p>
+                </div>
+                <div className={styles.BlurbSeriesValue}>
+                  <p>
+                    {blurb}
+                  </p>
+                </div>
+              </Card.Text>}
+              {series_title && <Card.Text>
+                <div className={styles.Key}>
+                  <p>
+                    Part of:
+                  </p>
+                </div>
+                <div className={styles.Value}>
+                  <p>
+                    {series_title}
+                  </p>
+                </div>
+              </Card.Text>}
+              {series_book_no && <Card.Text>
+                <div className={styles.Key}>
+                  <p>
+                    Book no.:
+                  </p>
+                </div>
+                <div className={styles.Value}>
+                  <p>
+                    {series_book_no}
+                  </p>
+                </div>
+              </Card.Text>}
+              {series_links && <Card.Text>
+                <div className={styles.BlurbSeriesKey}>
+                  <p>
+                    Other books in series:
+                  </p>
+                </div>
+                <Row className={styles.BlurbSeriesValue}>
+                  {seriesLinks}
+                </Row>
+              </Card.Text>}
             </Col>
           </Row>
         </Card.Body>

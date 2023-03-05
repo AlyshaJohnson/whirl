@@ -52,3 +52,66 @@ span.Title:hover {
 span.Author {
   color: #BB7058;
 }
+
+.BookInfoItem {
+	margin-bottom: 20px;
+	display: block;
+	clear: both;
+}
+
+.BookInfoItem .Key,
+.BookInfoItem .Value {
+	padding-right: 8px;
+	display: inline-block;
+}
+
+.BookInfoItem .Key p,
+.BookInfoItem .Value p {
+	margin: 0;
+}
+
+.BookInfoItem .Key {
+	width: 30%;
+	margin-right: 21px;
+	padding-top: 2px;
+	vertical-align: centre;
+}
+
+.BookInfoItem .Key p {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: left;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64868F;
+}
+
+.BookInfoItem .Value {
+	position: relative;
+	width: 65%;
+}
+
+.BookInfoItem .Value p {
+  text-align: left;
+}
+
+.BookInfoItem .BlurbSeriesKey p {
+  padding-right: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: left;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64868F;
+}
+
+.BookInfoItem .BlurbSeriesValue {
+  position: relative;
+  width: 95%;
+}
+
+.BookInfoItem .BlurbSeriesValue p {
+  text-align: left
+}
