@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import styles from "../../styles/SignUpForm.module.css";
 import appStyles from "../../App.module.css";
+import btnStyles from "../../styles/Button.module.css"
 
 import { Form, Button, Image, Col, Row, Container, Alert } from "react-bootstrap";
 import axios from 'axios'
@@ -45,7 +46,7 @@ const SignUpForm = () => {
                 <Image
                     className={`${appStyles.FillerImage}`}
                     src={
-                        "https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero2.jpg"
+                        "https://res.cloudinary.com/dqzkdlnbr/image/upload/v1678234924/sign-in.jpg"
                     }
                 />
             </Col>
@@ -55,7 +56,7 @@ const SignUpForm = () => {
             >
                 <Container className={appStyles.Content}>
                     <h1 className={styles.Header}>Sign Up</h1>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} className="text-center">
                         <Form.Group controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
                             <Form.Control type="text" placeholder="Enter Username" name="username" value={username} onChange={handleChange} />
@@ -83,8 +84,8 @@ const SignUpForm = () => {
                                 {message}
                             </Alert>
                         ))}
-                        <Button variant="primary" type="submit">
-                            Submit
+                        <Button className={`${btnStyles.MidBtn} ${btnStyles.Orange}`} type="submit">
+                            Sign Up
                         </Button>
                         {errors.non_field_errors?.map((message, idx) => (
                             <Alert key={idx} variant="warning" className="mt-3">

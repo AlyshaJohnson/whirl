@@ -5,6 +5,7 @@ import { useRedirect } from "../../hooks/useRedirect";
 
 import styles from "../../styles/SignUpForm.module.css";
 import appStyles from "../../App.module.css";
+import btnStyles from "../../styles/Button.module.css"
 
 import { Form, Button, Image, Col, Row, Container, Alert } from "react-bootstrap";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
@@ -50,14 +51,14 @@ const SignInForm = () => {
                 <Image
                     className={`${appStyles.FillerImage}`}
                     src={
-                        "https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero2.jpg"
+                        "https://res.cloudinary.com/dqzkdlnbr/image/upload/v1678234924/sign-in.jpg"
                     }
                 />
             </Col>
             <Col className="my-auto py-2 p-md-2" md={6}>
                 <Container className={`${appStyles.Content} p-4 `}>
                     <h1 className={styles.Header}>Sign In</h1>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} className="text-center">
                         <Form.Group controlId="username">
                             <Form.Label className="d-none">Username</Form.Label>
                             <Form.Control
@@ -90,7 +91,7 @@ const SignInForm = () => {
                                 {message}
                             </Alert>
                         ))}
-                        <Button variant="primary" type="submit">
+                        <Button className={`${btnStyles.MidBtn} ${btnStyles.Orange}`} type="submit">
                             Sign In
                         </Button>
                         {errors.non_field_errors?.map((message, idx) => (
