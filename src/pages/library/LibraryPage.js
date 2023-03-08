@@ -4,13 +4,14 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button"
+import { Link } from "react-router-dom"
 
 import Book from "./Book";
 import Asset from "../../components/Asset";
 
 import appStyles from "../../App.module.css";
 import styles from "../../styles/ReviewsPage.module.css";
+import btnStyles from "../../styles/Button.module.css"
 import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
@@ -18,6 +19,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 
 import NoResults from "../../assets/no-results.png";
+import { useCurrentUserIsLibrarian } from "../../contexts/CurrentUserIsLibrarianContext";
 
 function LibraryPage({ message, filter = "" }) {
   const [books, setBooks] = useState({ results: [] });
@@ -26,15 +28,16 @@ function LibraryPage({ message, filter = "" }) {
   const [query, setQuery] = useState("");
 
   const currentUser = useCurrentUser();
-  const is_librarian = currentUser?.is_staff === true;
+  const isLibrarian = useCurrentUserIsLibrarian();
 
   const addBookIcon = (
-    <Col lg={4}>
-      <Button
+    <Col lg={2} className="m-auto">
+      <Link
         to="/library/create"
+        className={`py-3 ${btnStyles.Orange} ${btnStyles.MidBtn}`}
       >
         <i className="far fa-plus-square"></i>Add Book
-      </Button>
+      </Link>
     </Col>
   );
 
@@ -61,11 +64,11 @@ function LibraryPage({ message, filter = "" }) {
 
     return (
       <>
-        <Row className="h-100">
-          <Col className="py-2 p-0 p-lg-2" lg={8}>
+        <Row className="h-100 my-auto">
+          <Col className="py-auto p-lg-2" lg={10}>
             <i className={`fas fa-search ${styles.SearchIcon}`} />
             <Form
-              className={styles.SearchBar}
+              className={`${styles.SearchBar}`}
               onSubmit={(event) => event.preventDefault()}
             >
                 <Form.Control
@@ -77,7 +80,7 @@ function LibraryPage({ message, filter = "" }) {
                 />
             </Form>
           </Col>
-          {is_librarian ? addBookIcon : <></> }
+          {addBookIcon}
         </Row>
         {hasLoaded ? (
           <>
@@ -94,7 +97,7 @@ function LibraryPage({ message, filter = "" }) {
             ) : (
               <Container className={appStyles.Content}>
                 <Asset src={NoResults} message={message} />
-                {is_librarian ? addBookIcon : <></> }
+                {isLibrarian ? addBookIcon : <></> }
               </Container>
             )}
           </>

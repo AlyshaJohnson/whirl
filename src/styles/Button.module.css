@@ -1,5 +1,5 @@
 .MidBtn {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   align-self: center;
   border-radius: 5px;
   border-color: transparent;
@@ -11,7 +11,7 @@
 }
 
 .SmBtn {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   align-self: center;
   border-radius: 5px;
   border-color: transparent;
@@ -21,6 +21,11 @@
   text-transform: uppercase;
   text-align: center;
   margin: 1px;
+}
+
+.SmBtn i,
+.MidBtn i {
+  font-size: 0.9rem;
 }
   
 .MidBtn:hover,
@@ -51,7 +56,7 @@
 }
 
 .Orange,
-.Orange > i,
+.Orange i,
 .OrangeOutline:hover {
   background-color: #E8AB4F;
   color: #ffffff;
@@ -64,7 +69,8 @@
   color: #E8AB4F;
 }
 
-.Orange:hover > i {
+.Orange:hover i {
   background-color: #ffffff;
   color: #E8AB4F;
 }
+

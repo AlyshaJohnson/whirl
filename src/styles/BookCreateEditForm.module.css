@@ -5,8 +5,8 @@
 .Header {
     font-style: normal;
     font-weight: bold;
-    font-size: 25px;
-    line-height: 19px;
+    font-size: 50px;
+    line-height: 52px;
     text-align: center;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -15,4 +15,21 @@
 
 .BottomBorder {
     border-bottom: 1px solid #64868F;
+}
+
+.Label {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #64868F;
+}
+
+.ImageDiv {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 100%;
 }

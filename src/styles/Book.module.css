@@ -18,8 +18,8 @@ h5 {
 }
 
 .Image {
-  max-width: 500px;
-  height: auto;
+  width: auto;
+  max-height: 400px;
 }
 
 .Container {

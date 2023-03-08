@@ -43,12 +43,12 @@ const Book = (props) => {
             </Col>
           </Row>
           <Row>
-            <Col className={`my-auto d-none d-md-block p-2 ${styles.CoverCol}`} md={6}>
+            <Col className={`my-auto d-none d-md-block p-2 ${styles.CoverCol}`} md={5}>
               <Link to={`/library/${id}`}>
                 <Card.Img className={`${styles.Image}`} src={cover} alt={title} />
               </Link>
             </Col>
-            <Col className={`mt-2 ${styles.BookInfoItem}`} xs={12} md={6}>
+            <Col className={`mt-2 ${styles.BookInfoItem}`} xs={12} md={7}>
               {ISBN && <Card.Text>
                 <div className={styles.Key}>
                   <p>
@@ -96,40 +96,6 @@ const Book = (props) => {
                     {blurb}
                   </p>
                 </div>
-              </Card.Text>}
-              {series_title && <Card.Text>
-                <div className={styles.Key}>
-                  <p>
-                    Part of:
-                  </p>
-                </div>
-                <div className={styles.Value}>
-                  <p>
-                    {series_title}
-                  </p>
-                </div>
-              </Card.Text>}
-              {series_book_no && <Card.Text>
-                <div className={styles.Key}>
-                  <p>
-                    Book no.:
-                  </p>
-                </div>
-                <div className={styles.Value}>
-                  <p>
-                    {series_book_no}
-                  </p>
-                </div>
-              </Card.Text>}
-              {series_links && <Card.Text>
-                <div className={styles.BlurbSeriesKey}>
-                  <p>
-                    Other books in series:
-                  </p>
-                </div>
-                <Row className={styles.BlurbSeriesValue}>
-                  {seriesLinks}
-                </Row>
               </Card.Text>}
             </Col>
           </Row>

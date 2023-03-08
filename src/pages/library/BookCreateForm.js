@@ -1,63 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
+import { useHistory } from "react-router";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image"
 
 import styles from "../../styles/BookCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { axiosReq } from "../../api/axiosDefaults";
-import { useHistory } from "react-router";
+
 
 function BookCreateForm() {
     const [bookData, setBookData] = useState({
         title: "",
         author: "",
+        cover: "",
         ISBN: "",
         publisher: "",
         published: "",
         blurb: "",
-        seriesTitle: "",
-        seriesBookNo: "",
-        seriesLinks: [],
     });
 
-    const { title, author, ISBN, publisher, published, blurb, seriesTitle, seriesBookNo, seriesLinks } = bookData;
+    const { title, author, cover, ISBN, publisher, published, blurb } = bookData;
     
-    const [options, setOptions] = useState([]);
     const [errors, setErrors] = useState({});
     const history = useHistory();
-
-    useEffect(() => {
-        async function fetchData() {
-            // Fetch data
-            const { data } = await axiosReq.get("/library/");
-            const results = []
-            // Store results in the results array
-            data.forEach((value) => {
-                results.push({
-                key: value.title,
-                value: value.id,
-                });
-            });
-            // Update the options state
-            setOptions([
-                {key: 'Select a book', value: ''}, 
-                ...results
-            ])
-        }
-    
-        // Trigger the fetch
-        fetchData();
-    }, []);
+    const imageInput = useRef(null);
 
     const handleChange = (event) => {
         setBookData({
           ...bookData,
           [event.target.name]: event.target.value,
         });
+    };
+
+    const handleChangeImage = (event) => {
+        if (event.target.files.length) {
+            URL.revokeObjectURL(cover);
+            setBookData({
+                ...bookData,
+                cover: URL.createObjectURL(event.target.files[0]),
+            });
+        }
     };
     
     const handleSubmit = async (event) => {
@@ -66,18 +55,16 @@ function BookCreateForm() {
     
         formData.append("title", title);
         formData.append("author", author);
+        formData.append("cover", imageInput.current.files[0]);
         formData.append("ISBN", ISBN);
         formData.append("publisher", publisher);
         formData.append("published", published);
         formData.append("blurb", blurb);
-        formData.append("seriesTitle", seriesTitle);
-        formData.append("seriesBookNo", seriesBookNo);
-        formData.append("seriesLinks", seriesLinks);
-
     
         try {
             const { data } = await axiosReq.post("/library/", formData);
             history.push(`/library/${data.id}`);
+            console.log(data)
         } catch (err) {
             console.log(err);
             if (err.response?.status !== 401) {
@@ -107,6 +94,48 @@ function BookCreateForm() {
                     {message}
                 </Alert>
             ))}
+            <Form.Group>
+                <Row>
+                    <Col sm={3} className={`${styles.Label} py-2`}>Cover Image</Col>
+                    <Col sm={9}>
+                        {cover ? (
+                            <>
+                                <div className={`${styles.Label} ${styles.ImageDiv}`}>
+                                    <figure>
+                                        <Image className={`${appStyles.Image} pt-2`} src={cover} rounded />
+                                    </figure>
+                                    <div>
+                                        <Form.Label
+                                        className={`${btnStyles.Label}`}
+                                        htmlFor="image-upload"
+                                        >
+                                        Click to change the image
+                                        </Form.Label>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <Form.Label
+                                className={`d-flex justify-content-center py-2 ${styles.Label} ${styles.ImageDiv}`}
+                                htmlFor="image-upload"
+                                >Click to select image</Form.Label>
+                            </>
+                        )}
+                        <Form.File
+                            id="image-upload"
+                            accept="image/*"
+                            onChange={handleChangeImage}
+                            ref={imageInput}
+                            />
+                    </Col>
+                </Row>
+            </Form.Group>
+            {errors?.image?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
             <Form.Group controlId="ISBN">
                 <Form.Label className="d-none">ISBN</Form.Label>
                 <Form.Control type="text" placeholder="Enter ISBN" name="ISBN" value={ISBN} onChange={handleChange} />
@@ -126,14 +155,28 @@ function BookCreateForm() {
                 </Alert>
             ))}
             <Form.Group controlId="published">
-                <Form.Label className="d-none">Date published</Form.Label>
-                <Form.Control type="date" placeholder="Date Published" name="published" value={published} onChange={handleChange} />
+                <Row>
+                    <Col sm={3}>
+                        <Form.Label className={`${styles.Label} ${appStyles.Inline} py-2`}>Date published</Form.Label>
+                    </Col>
+                    <Col sm={9}>
+                        <Form.Control 
+                        className={appStyles.Inline}
+                        type="date"
+                        placeholder="Date Published"
+                        name="published"
+                        value={published}
+                        onChange={handleChange}
+                        />
+                    </Col>
+                </Row>
             </Form.Group>
             {errors?.published?.map((message, idx) => (
                 <Alert variant="warning" key={idx}>
                     {message}
                 </Alert>
             ))}
+
             <Form.Group controlId="blurb">
                 <Form.Label className="d-none">Blurb</Form.Label>
                 <Form.Control as="textarea" rows={5} placeholder="Blurb" name="blurb" value={blurb} onChange={handleChange} />
@@ -143,42 +186,12 @@ function BookCreateForm() {
                     {message}
                 </Alert>
             ))}
-            <Form.Group controlId="seriesTitle">
-                <Form.Label className="d-none">Series Title</Form.Label>
-                <Form.Control type="text" placeholder="Series title" name="seriesTitle" value={seriesTitle} onChange={handleChange} />
-            </Form.Group>
-            {errors?.seriesTitle?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                    {message}
-                </Alert>
-            ))}
-            <Form.Group controlId="seriesBookNo">
-                <Form.Label className="d-none">Series Title</Form.Label>
-                <Form.Control type="text" placeholder="Number in series" name="seriesBookNo" value={seriesBookNo} onChange={handleChange} />
-            </Form.Group>
-            {errors?.seriesBookNo?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                    {message}
-                </Alert>
-            ))}
-            <Form.Group controlId="seriesLinks">
-                <Form.Label className="d-none">Other books in series</Form.Label>
-                <Form.Control multiple as="select" placeholder="Other books in series" name="seriesLinks" value={seriesLinks} onChange={handleChange}>
-                    {options.map((option) => {
-                        return (
-                            <option key={option.value} value={option.value}>
-                            {option.key}
-                            </option>
-                        );
-                    })}
-                </Form.Control>
-            </Form.Group>
-            <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
-            publish
+            <Button className={`${btnStyles.MidBtn} ${btnStyles.Orange}`} type="submit">
+            add
             </Button>
             <Button
-                className={`${btnStyles.Button} ${btnStyles.Blue}`}
-                onClick={() => {}}
+                className={`${btnStyles.MidBtn} ${btnStyles.OrangeOutline}`}
+                onClick={() => history.goBack()}
             >
             cancel
             </Button>
