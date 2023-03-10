@@ -17,6 +17,7 @@ import {
 
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
+import styles from "../../styles/ProfileCreateEditForm.module.css"
 
 const ProfileEditForm = () => {
   const currentUser = useCurrentUser();
@@ -30,9 +31,10 @@ const ProfileEditForm = () => {
     age: "",
     image: "",
     medium: "",
-    favourite_quote: "",
+    quote: "",
   });
-  const { name, age, image, medium, favourite_quote } = profileData;
+
+  const { name, age, image, medium, quote } = profileData;
 
   const [errors, setErrors] = useState({});
 
@@ -41,8 +43,8 @@ const ProfileEditForm = () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
-          const { name, age, image, medium, favourite_quote } = data;
-          setProfileData({ name, age, image, medium, favourite_quote });
+          const { name, age, image, medium, quote } = data;
+          setProfileData({ name, age, image, medium, quote });
         } catch (err) {
           console.log(err);
           history.push("/");
@@ -65,10 +67,11 @@ const ProfileEditForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
+
     formData.append("name", name);
     formData.append("age", age);
     formData.append("medium", medium);
-    formData.append("favourite_quote", favourite_quote);
+    formData.append("quote", quote);
 
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
@@ -78,7 +81,7 @@ const ProfileEditForm = () => {
       const { data } = await axiosReq.put(`/profiles/${id}/`, formData);
       setCurrentUser((currentUser) => ({
         ...currentUser,
-        profile_image: data.image,
+        image: data.image,
       }));
       history.goBack();
     } catch (err) {
@@ -89,40 +92,40 @@ const ProfileEditForm = () => {
 
   const textFields = (
     <>
-      <Form.Group>
-        <Form.Label>Name</Form.Label>
+      <Form.Group controlId="name">
+        <Form.Label className={styles.Label}>Name</Form.Label>
         <Form.Control
-          as="text"
+          type="text"
           value={name}
           onChange={handleChange}
           name="name"
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>Age</Form.Label>
+      <Form.Group controlId="age">
+        <Form.Label className={styles.Label}>Age</Form.Label>
         <Form.Control
-          as="text"
+          type="text"
           value={age}
           onChange={handleChange}
           name="age"
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>Reading medium</Form.Label>
+      <Form.Group controlId="medium">
+                <Form.Label className={styles.Label}>Reading Medium</Form.Label>
+                <Form.Control as="select" multiple placeholder="Reading Medium" name="medium" value={medium} onChange={handleChange}>
+                    <option value="Hardback">Hardback</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="E-Book">E-Book</option>
+                    <option value="Audiobook">Audiobook</option>
+                </Form.Control>
+            </Form.Group>
+      <Form.Group controlId="quote">
+        <Form.Label className={styles.Label}>Favourite quote</Form.Label>
         <Form.Control
-          as="text"
-          value={medium}
+          type="text"
+          value={quote}
           onChange={handleChange}
-          name="medium"
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Favourite quote</Form.Label>
-        <Form.Control
-          as="text"
-          value={favourite_quote}
-          onChange={handleChange}
-          name="favourite_quote"
+          name="quote"
         />
       </Form.Group>
 
@@ -131,14 +134,14 @@ const ProfileEditForm = () => {
           {message}
         </Alert>
       ))}
+      <Button className={`${btnStyles.SmBtn} ${btnStyles.Orange}`} type="submit">
+        save
+      </Button>
       <Button
         className={`${btnStyles.SmBtn} ${btnStyles.OrangeOutline}`}
         onClick={() => history.goBack()}
       >
         cancel
-      </Button>
-      <Button className={`${btnStyles.SmBtn} ${btnStyles.Orange}`} type="submit">
-        save
       </Button>
     </>
   );
@@ -150,23 +153,20 @@ const ProfileEditForm = () => {
           <Container className={appStyles.Content}>
             <Form.Group>
               {image && (
-                <figure>
-                  <Image src={image} fluid />
-                </figure>
+                <>
+                  <figure>
+                    <Image src={image} fluid />
+                  </figure>
+                  <div>
+                    <Form.Label
+                      className={`${styles.Label}`}
+                      htmlFor="image-upload"
+                    >
+                      Click to change the image
+                    </Form.Label>
+                  </div>
+                </>
               )}
-              {errors?.image?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                  {message}
-                </Alert>
-              ))}
-              <div>
-                <Form.Label
-                  className={`${btnStyles.Button} ${btnStyles.Blue} btn my-auto`}
-                  htmlFor="image-upload"
-                >
-                  Change the image
-                </Form.Label>
-              </div>
               <Form.File
                 id="image-upload"
                 ref={imageFile}
@@ -181,6 +181,11 @@ const ProfileEditForm = () => {
                 }}
               />
             </Form.Group>
+            {errors?.image?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>

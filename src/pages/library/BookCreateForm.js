@@ -64,7 +64,6 @@ function BookCreateForm() {
         try {
             const { data } = await axiosReq.post("/library/", formData);
             history.push(`/library/${data.id}`);
-            console.log(data)
         } catch (err) {
             console.log(err);
             if (err.response?.status !== 401) {
@@ -106,7 +105,7 @@ function BookCreateForm() {
                                     </figure>
                                     <div>
                                         <Form.Label
-                                        className={`${btnStyles.Label}`}
+                                        className={`${styles.Label}`}
                                         htmlFor="image-upload"
                                         >
                                         Click to change the image
