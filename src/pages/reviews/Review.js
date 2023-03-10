@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styles from "../../styles/Review.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Row, Col, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
+import { MoreDropdown } from "../../components/MoreDropdown";
 
 const Reviews = (props) => {
   const {
@@ -31,6 +33,20 @@ const Reviews = (props) => {
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+  const history = useHistory();
+
+  const handleEdit = () => {
+    history.push(`/reviews/${id}/edit`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosRes.delete(`/reviews/${id}/`);
+      history.push("/");
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   const handleLike = async () => {
     try {
@@ -73,8 +89,13 @@ const Reviews = (props) => {
             {owner}
           </Link>
           <div className={`d-flex align-items-center ${styles.SmHeader}`}>
-            <span>{created_at}</span>
-            {is_owner && reviewPage}
+            <span>{updated_at}</span>
+            {is_owner && reviewPage && (
+              <MoreDropdown
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            )}
           </div>
         </Media>
       </Card.Body>

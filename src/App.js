@@ -16,6 +16,7 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import React from 'react'
+import ReviewEditForm from "./pages/reviews/ReviewEditForm";
 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 
@@ -49,6 +50,7 @@ function App() {
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/reviews/create" render={() => <ReviewCreateForm />} />
           <Route exact path="/reviews/:id" render={() => <ReviewPage />} />
+          <Route exact path="/reviews/:id/edit" render={() => <ReviewEditForm />} />
           <Route exact path="/library/create" render={() => <BookCreateForm />} />
           <Route exact path="/library/:id" render={() => <BookPage />} />
           <Route exact path="/library/" render={() => <LibraryPage />} />
