@@ -1,5 +1,8 @@
-import React, { useState, useRef } from "react";
-import { useHistory } from "react-router";
+import React, { useState, useRef, useEffect } from "react";
+
+import { axiosReq } from "../../api/axiosDefaults";
+import { useHistory, useParams } from "react-router";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -12,10 +15,10 @@ import Image from "react-bootstrap/Image"
 import styles from "../../styles/BookCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-import { axiosReq } from "../../api/axiosDefaults";
 
+function BookEditForm() {
+    const currentUser = useCurrentUser();
 
-function BookCreateForm() {
     const [bookData, setBookData] = useState({
         title: "",
         author: "",
@@ -31,6 +34,22 @@ function BookCreateForm() {
     const [errors, setErrors] = useState({});
     const history = useHistory();
     const imageInput = useRef(null);
+    const { id } = useParams();
+
+    useEffect(() => {
+        const handleMount = async () => {
+            try {
+                const { data } = await axiosReq.get(`/library/${id}/`);
+                const { title, author, cover, ISBN, publisher, published, blurb } = data;
+        
+                currentUser ? setBookData({ title, author, cover, ISBN, publisher, published, blurb }) : history.push("/")
+            } catch (err) {
+                console.log(err);
+          }
+        };
+    
+        handleMount();
+      }, [history, id]);
 
     const handleChange = (event) => {
         setBookData({
@@ -74,7 +93,7 @@ function BookCreateForm() {
 
     const textFields = (
         <div className="text-center">
-            <h1 className={styles.Header}>Add a Book</h1>
+            <h1 className={styles.Header}>Edit Book</h1>
             <Form.Group controlId="title">
                 <Form.Label className="d-none">Title</Form.Label>
                 <Form.Control type="text" placeholder="Enter Book Title" name="title" value={title} onChange={handleChange} />
@@ -204,4 +223,4 @@ function BookCreateForm() {
     );
 }
 
-export default BookCreateForm;
+export default BookEditForm;

@@ -17,6 +17,7 @@ import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import React from 'react'
 import ReviewEditForm from "./pages/reviews/ReviewEditForm";
+import BookEditForm from './pages/library/BookEditForm';
 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 
@@ -54,6 +55,7 @@ function App() {
           <Route exact path="/library/create" render={() => <BookCreateForm />} />
           <Route exact path="/library/:id" render={() => <BookPage />} />
           <Route exact path="/library/" render={() => <LibraryPage />} />
+          <Route exact path="/library/:id/edit" render={() => <BookEditForm />} />
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route
             exact

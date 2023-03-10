@@ -1,4 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+
+import { axiosReq } from "../../api/axiosDefaults";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+import Book from "./Book";
+import Asset from "../../components/Asset";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData } from "../../utils/utils";
+import NoResults from "../../assets/no-results.png";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -6,20 +16,9 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom"
 
-import Book from "./Book";
-import Asset from "../../components/Asset";
-
 import appStyles from "../../App.module.css";
 import styles from "../../styles/ReviewsPage.module.css";
 import btnStyles from "../../styles/Button.module.css"
-import { useLocation } from "react-router";
-import { axiosReq } from "../../api/axiosDefaults";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData } from "../../utils/utils";
-
-import NoResults from "../../assets/no-results.png";
-import { useCurrentUserIsLibrarian } from "../../contexts/CurrentUserIsLibrarianContext";
 
 function LibraryPage({ message, filter = "" }) {
   const [books, setBooks] = useState({ results: [] });
@@ -28,7 +27,6 @@ function LibraryPage({ message, filter = "" }) {
   const [query, setQuery] = useState("");
 
   const currentUser = useCurrentUser();
-  const isLibrarian = useCurrentUserIsLibrarian();
 
   const addBookIcon = (
     <Col lg={2} className="m-auto">
@@ -80,7 +78,7 @@ function LibraryPage({ message, filter = "" }) {
                 />
             </Form>
           </Col>
-          {addBookIcon}
+          {(currentUser?.is_librarian === true) && addBookIcon}
         </Row>
         {hasLoaded ? (
           <>
@@ -97,7 +95,7 @@ function LibraryPage({ message, filter = "" }) {
             ) : (
               <Container className={appStyles.Content}>
                 <Asset src={NoResults} message={message} />
-                {isLibrarian ? addBookIcon : <></> }
+                {(currentUser?.is_librarian === true) && addBookIcon}
               </Container>
             )}
           </>

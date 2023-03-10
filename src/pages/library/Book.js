@@ -1,10 +1,20 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+
+import { axiosRes } from "../../api/axiosDefaults";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+import { Card, Col, Row, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { MoreDropdown } from "../../components/MoreDropdown";
+
 import styles from "../../styles/Book.module.css";
 import btnStyles from "../../styles/Button.module.css"
-import { Card, Col, Row, Button } from "react-bootstrap";
-import { Link } from "react-router-dom"
 
 const Book = (props) => {
+  const currentUser = useCurrentUser();
+  const history = useHistory();
+
   const {
     id,
     title,
@@ -14,14 +24,20 @@ const Book = (props) => {
     publisher,
     published,
     blurb,
-    series_title,
-    series_book_no,
-    series_links = []
   } = props;
 
-  const seriesLinks = series_links.map((link) => {
-    <Col lg={4} md={6}>{link}</Col>
-  })
+  const handleEdit = () => {
+    history.push(`/library/${id}/edit`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosRes.delete(`/library/${id}/`);
+      history.push("/library/");
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   return (
     <>
@@ -33,13 +49,23 @@ const Book = (props) => {
                 <Link to={`/library/${id}`}><span className={styles.Title}>{title}</span></Link> by <span className={styles.Author}>{author}</span>
               </Card.Title>
             </Col>
-            <Col className="mb-2" xs={3}>
-            <Button
-              className={`${btnStyles.SmBtn} ${btnStyles.Orange}`}
-              to="/review/create/"
-            >
-              <i className="far fa-plus-square"></i><span className="d-none d-md-inline">Add Review</span>
-            </Button>
+            <Col className="mb-2" xs={2}>
+              <Button
+                className={`${btnStyles.SmBtn} ${btnStyles.Orange}`}
+                to="/review/create/"
+              >
+                <i className="far fa-plus-square"></i><span className="d-none d-md-inline">Add Review</span>
+              </Button>
+            </Col>
+            <Col>
+            <div className={`d-flex align-items-center ${styles.SmHeader}`}>
+            {(currentUser?.is_librarian === true) && (
+              <MoreDropdown
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            )}
+          </div>
             </Col>
           </Row>
           <Row>

@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import styles from "../../styles/Review.module.css";
+
+import { axiosRes } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
 import { Card, Row, Col, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
-import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
+
+import styles from "../../styles/Review.module.css";
 
 const Reviews = (props) => {
   const {
@@ -23,10 +26,8 @@ const Reviews = (props) => {
     book_author,
     title,
     description,
-    created_at,
     updated_at,
     rating,
-    draft,
     reviewPage,
     setReviews,
   } = props;
