@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://whirl-backend-api.herokuapp.com';
-axios.defaults.baseURL = 'https://8000-alyshajohnson-pp5api-bqdzbws5o9e.ws-eu89b.gitpod.io/';
+axios.defaults.baseURL = 'https://whirl-backend-api.herokuapp.com';
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 axios.defaults.withCredentials = true;
 

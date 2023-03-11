@@ -30,7 +30,7 @@ const ProfileEditForm = () => {
     name: "",
     age: "",
     image: "",
-    medium: "",
+    medium: [],
     quote: "",
   });
 
@@ -128,7 +128,6 @@ const ProfileEditForm = () => {
           name="quote"
         />
       </Form.Group>
-
       {errors?.content?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}

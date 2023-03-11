@@ -1,8 +1,12 @@
-import styles from './App.module.css';
-import NavBar from './components/NavBar';
+import React from 'react'
+
+import './api/axiosDefaults';
+import { useCurrentUser } from "./contexts/CurrentUserContext";
+
 import Container from "react-bootstrap/Container";
 import { Route, Switch } from "react-router-dom";
-import './api/axiosDefaults';
+
+import NavBar from './components/NavBar';
 import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import ReviewCreateForm from './pages/reviews/ReviewCreateForm'
@@ -15,11 +19,10 @@ import ProfilePage from "./pages/profiles/ProfilePage";
 import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
-import React from 'react'
 import ReviewEditForm from "./pages/reviews/ReviewEditForm";
 import BookEditForm from './pages/library/BookEditForm';
 
-import { useCurrentUser } from "./contexts/CurrentUserContext";
+import styles from './App.module.css';
 
 function App() {
   const currentUser = useCurrentUser();
